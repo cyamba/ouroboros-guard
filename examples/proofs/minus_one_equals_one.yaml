@@ -1,0 +1,19 @@
+# Reasoning backwards: assume the claim, derive something true, declare victory.
+# Squaring is an everyday algebra move, but it is not reversible: it throws away the sign.
+# Run:  oguard proof examples/proofs/minus_one_equals_one.yaml   (expected: INVALID, P1 + P4)
+title: "-1 = 1 by squaring (affirming the consequent)"
+goal: claim
+statements:
+  - id: claim
+    kind: goal
+    claim: "-1 = 1"
+    uses: [squared]
+  - id: squared
+    kind: step
+    claim: "(-1)^2 = 1^2, i.e. 1 = 1, which is true"
+    derived_from_goal: true      # obtained by squaring both sides of the goal
+    reversible: false            # x^2 = y^2 does not imply x = y
+    uses: [claim, arithmetic]
+  - id: arithmetic
+    kind: axiom
+    claim: "field axioms for the integers"

@@ -1,0 +1,33 @@
+# An independent route to lim_{x->0} sin x / x = 1: nested areas on the unit circle, then squeeze.
+# Run:  oguard proof examples/proofs/sinx_squeeze.yaml       (expected: structurally valid)
+title: "lim sin x / x = 1 via the squeeze theorem"
+goal: limit
+statements:
+  - id: limit
+    kind: goal
+    claim: "lim_{x->0} sin(x)/x = 1"
+    uses: [bounds, cos_continuous, squeeze_theorem, even_function]
+  - id: bounds
+    kind: lemma
+    claim: "for 0 < x < pi/2: cos(x) <= sin(x)/x <= 1"
+    uses: [areas]
+  - id: areas
+    kind: lemma
+    claim: "area(inner triangle) <= area(sector) <= area(outer triangle), i.e. sin(x)/2 <= x/2 <= tan(x)/2"
+    uses: [unit_circle_geometry, radian_measure]
+  - id: unit_circle_geometry
+    kind: definition
+    claim: "sin and cos as coordinates on the unit circle; tan = sin/cos"
+  - id: radian_measure
+    kind: definition
+    claim: "a sector of angle x radians in the unit circle has area x/2"
+  - id: cos_continuous
+    kind: cited
+    claim: "cos is continuous at 0 with cos(0) = 1"
+  - id: squeeze_theorem
+    kind: cited
+    claim: "if g <= f <= h near a and lim g = lim h = L, then lim f = L"
+  - id: even_function
+    kind: lemma
+    claim: "sin(x)/x is even, so the bound for x > 0 also covers x < 0"
+    uses: [unit_circle_geometry]

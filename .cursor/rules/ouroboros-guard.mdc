@@ -1,0 +1,17 @@
+---
+description: ouroboros-guard leakage and circularity rules for scientific prediction, evaluation and proofs
+alwaysApply: true
+---
+
+This project uses ouroboros-guard. Read and follow `AGENTS.md` at the repository root.
+
+The one rule: the outcome must never be an ancestor of the prediction, and every check you report must have
+been able to fail.
+
+- Never read or search paths listed under `sealed_paths` in `oguard.yaml`.
+- Never use information dated at or after `as_of`; treat undated information as suspect.
+- Commit predictions (`oguard commit`) before outcomes exist; never edit a committed file.
+- Run `oguard check` and `oguard audit` before reporting results, and disclose every failure.
+- For proofs, write the dependency graph and run `oguard proof`.
+
+Playbooks for each task are in `.claude/skills/<name>/SKILL.md` (plain Markdown, usable by any agent).

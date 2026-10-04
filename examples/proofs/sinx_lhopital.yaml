@@ -1,0 +1,28 @@
+# The circular route to lim_{x->0} sin x / x = 1.
+# With sine defined geometrically, L'Hopital's rule needs sin'(0), and sin'(0) is that same limit.
+# Run:  oguard proof examples/proofs/sinx_lhopital.yaml      (expected: INVALID, P1 cycle + P2 goal smuggled)
+title: "lim sin x / x = 1 via L'Hopital (circular)"
+goal: limit
+statements:
+  - id: limit
+    kind: goal
+    claim: "lim_{x->0} sin(x)/x = 1"
+    uses: [lhopital]
+  - id: lhopital
+    kind: step
+    claim: "lim sin(x)/x = lim cos(x)/1 = 1, by L'Hopital's rule"
+    uses: [lhopital_rule, derivative_of_sine]
+  - id: lhopital_rule
+    kind: cited
+    claim: "L'Hopital's rule for 0/0 forms"
+  - id: derivative_of_sine
+    kind: lemma
+    claim: "sin'(x) = cos(x), in particular sin'(0) = 1"
+    uses: [difference_quotient]
+  - id: difference_quotient
+    kind: step
+    claim: "sin'(0) = lim_{h->0} (sin h - sin 0)/h = lim_{h->0} sin(h)/h"
+    uses: [definition_of_derivative, limit]
+  - id: definition_of_derivative
+    kind: definition
+    claim: "f'(a) = lim_{h->0} (f(a+h) - f(a))/h"

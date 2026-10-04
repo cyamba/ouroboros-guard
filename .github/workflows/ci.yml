@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e ".[dev]"
+      - run: python -m pytest
+      - name: Examples behave as documented
+        run: |
+          oguard proof examples/proofs/sinx_squeeze.yaml
+          ! oguard proof examples/proofs/sinx_lhopital.yaml
+          ! oguard proof examples/proofs/parallel_wallis.yaml
+          ! oguard proof examples/proofs/minus_one_equals_one.yaml
+          ! oguard lean-axioms examples/lean/print_axioms_output.txt
+          python examples/agent_session/demo.py

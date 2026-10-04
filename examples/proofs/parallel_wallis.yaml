@@ -1,0 +1,23 @@
+# A Wallis-style "proof" of Euclid's parallel postulate (1663).
+# It assumes that similar triangles of different sizes exist, which, given the other axioms,
+# is equivalent to the postulate itself. Declaring the equivalence lets the checker see the smuggling.
+# Run:  oguard proof examples/proofs/parallel_wallis.yaml    (expected: INVALID, P2 goal smuggled)
+title: "Parallel postulate from the existence of similar triangles"
+goal: parallel_postulate
+statements:
+  - id: parallel_postulate
+    kind: goal
+    claim: "Through a point not on a line there is at most one parallel to it"
+    uses: [construction, similar_triangles_exist]
+  - id: construction
+    kind: step
+    claim: "build a triangle on the two lines and a smaller similar copy of it"
+    uses: [neutral_axioms, similar_triangles_exist]
+  - id: neutral_axioms
+    kind: axiom
+    claim: "Euclid's first four postulates (absolute geometry)"
+  - id: similar_triangles_exist
+    kind: assumption
+    claim: "For every triangle there is a similar, non-congruent triangle of any size"
+equivalent:
+  - [parallel_postulate, similar_triangles_exist]

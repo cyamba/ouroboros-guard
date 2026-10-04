@@ -1,0 +1,19 @@
+# Policy pack: retrospective benchmark evaluation of an LLM agent.
+# Outcomes already exist and may be on the web or in the model's training data. The pack makes that
+# visible instead of pretending otherwise: set the model's training cut-off, block known answer sources,
+# and report recall and prediction separately (oguard audit question 2).
+as_of: 2025-01-01T00:00:00Z            # pretend-time for the agent's tools
+model_training_cutoff: 2025-06-01      # outcomes published before this may be memorised
+missing_date_policy: warn
+context_is_ancestor: true
+sealed_paths:
+  - benchmark/answers/**
+  - benchmark/**/solutions/**
+blocked_sources:
+  - "github\\.com/.+/benchmark-answers"
+  - "huggingface\\.co/datasets/.+-solutions"
+budget:
+  test_looks: 1
+splits:
+  similarity_threshold: 0.8
+  max_fraction_above: 0.0

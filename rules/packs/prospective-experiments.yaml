@@ -1,0 +1,23 @@
+# Policy pack: prospective prediction of experimental outcomes.
+# For agents that predict results of experiments (lab assays, field trials, simulations run later,
+# engineering tests) that have not been run yet. The strictest pack: nothing undated gets through.
+# Merge these keys into your oguard.yaml.
+as_of: 2026-03-01T00:00:00Z           # the moment predictions are frozen
+missing_date_policy: reject
+context_is_ancestor: true
+sealed_paths:
+  - data/outcomes/**
+  - data/holdout/**
+  - lab/results/**
+  - "**/*.answers.*"
+blocked_sources:
+  # registries, preprint servers, lab notebooks and press pages that will report the outcomes
+  - "results-registry\\.example\\.org"
+  - "internal-eln\\.example\\.com"
+budget:
+  test_looks: 1
+controls:
+  permutations: 500
+  tolerance: 0.03
+judge:
+  require_different_model: true

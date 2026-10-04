@@ -1,0 +1,13 @@
+# Policy pack: AI-assisted mathematics (proof search, autoformalisation, proof review).
+# The leak to guard against is the answer itself: a published proof of the target, or a solution file,
+# reaching the prover; and the circular proof, which `oguard proof` and `oguard lean-axioms` catch.
+missing_date_policy: warn
+context_is_ancestor: true
+sealed_paths:
+  - solutions/**
+  - "**/*Solution*.lean"
+blocked_sources:
+  - "proofwiki\\.org/wiki/<target-theorem>"      # replace with sources that state the target's proof
+  - "math\\.stackexchange\\.com/questions/<id>"
+budget:
+  test_looks: 3            # attempts at a held-out problem set before results are reported

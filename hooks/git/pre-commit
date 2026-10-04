@@ -1,0 +1,34 @@
+#!/bin/sh
+# ouroboros-guard git pre-commit hook.
+# Install:  ln -s ../../hooks/git/pre-commit .git/hooks/pre-commit   (or: git config core.hooksPath hooks/git)
+#
+# 1. Never commit a commitment salt: it would let anyone read your sealed predictions early.
+# 2. Never commit a ledger whose information graph has critical findings.
+# 3. Never commit a predictions file that no longer matches its published commitment.
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+
+if printf '%s\n' "$staged" | grep -qE '\.salt$'; then
+  echo "ouroboros-guard: refusing to commit a *.salt file. Salts stay private until the reveal." >&2
+  exit 1
+fi
+
+if command -v oguard >/dev/null 2>&1 && [ -f oguard.yaml ]; then
+  if ! oguard check >/tmp/oguard-check.$$ 2>&1; then
+    cat /tmp/oguard-check.$$ >&2
+    rm -f /tmp/oguard-check.$$
+    echo "ouroboros-guard: the information graph has critical findings (see above). Fix or disclose them first." >&2
+    exit 1
+  fi
+  rm -f /tmp/oguard-check.$$
+  for c in $(git ls-files '*.commit.json'); do
+    f="${c%.commit.json}"
+    if [ -f "$f" ] && [ -f "$f.salt" ]; then
+      oguard verify "$f" >/dev/null || {
+        echo "ouroboros-guard: $f changed after it was committed to ($c). Predictions are frozen once committed." >&2
+        exit 1
+      }
+    fi
+  done
+fi
+exit 0

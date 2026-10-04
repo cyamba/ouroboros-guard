@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.venv/
+# commitment salts stay private until the reveal
+*.salt
+# local evidence produced by running examples in the repository root
+/.oguard/

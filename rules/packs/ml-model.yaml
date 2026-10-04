@@ -1,0 +1,17 @@
+# Policy pack: classical ML or statistical modelling on a fixed dataset.
+# The main dangers are preprocessing on all data, near-duplicate splits and test-set steering.
+missing_date_policy: allow             # dates rarely matter; the split does
+context_is_ancestor: false             # no agent context window, explicit parents only
+sealed_paths:
+  - data/test/**
+budget:
+  test_looks: 1
+controls:
+  permutations: 200
+  tolerance: 0.05
+splits:
+  similarity_threshold: 0.95
+  max_fraction_above: 0.0
+ceiling:
+  replicate_agreement: null            # fill in from repeated measurements if you have them
+  test_retest_r: null
