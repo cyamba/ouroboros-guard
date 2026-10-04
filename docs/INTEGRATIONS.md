@@ -6,7 +6,7 @@
 agents that do not load skills natively can still be told to read the matching file.
 
 ## Claude Code
-1. `pip install ouroboros-guard` (or `pip install -e .` in this repository).
+1. `pip install git+https://github.com/cyamba/ouroboros-guard` (or `pip install -e .` in this repository).
 2. Copy `.claude/settings.json` and `hooks/claude/guard.py` into your project (keep the path
    `hooks/claude/guard.py`, or edit the command in `settings.json`).
 3. `oguard init` and fill in `as_of`, `sealed_paths` and `blocked_sources`.
@@ -32,7 +32,7 @@ longer match their commitments.
 
 ## CI (GitHub Actions)
 ```yaml
-- run: pip install ouroboros-guard
+- run: pip install git+https://github.com/cyamba/ouroboros-guard
 - run: oguard check
 - run: oguard audit --format md --out AUDIT.md
 - uses: actions/upload-artifact@v4

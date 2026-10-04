@@ -72,7 +72,7 @@ sealed file, do not change `as_of` to make a finding disappear. Report the findi
 ## Commands
 
 ```bash
-pip install -e .            # or: pip install ouroboros-guard
+pip install -e .            # or: pip install git+https://github.com/cyamba/ouroboros-guard
 oguard init                 # writes oguard.yaml and .oguard/
 oguard check                # information-graph checks (exit 1 on critical findings)
 oguard audit --format md    # the ten-question audit

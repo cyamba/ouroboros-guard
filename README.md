@@ -44,7 +44,7 @@ flowchart LR
 ## Quick start
 
 ```bash
-pip install ouroboros-guard            # from source: pip install -e ".[dev]"
+pip install git+https://github.com/cyamba/ouroboros-guard   # or, in a clone: pip install -e ".[dev]"
 oguard init                            # writes oguard.yaml and .oguard/
 ```
 

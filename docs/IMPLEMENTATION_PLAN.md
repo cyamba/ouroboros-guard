@@ -105,7 +105,7 @@ layer says so in its report.
 
 | Step | Action | Time |
 |------|--------|------|
-| 1 | `pip install ouroboros-guard`, `oguard init`, fill in `as_of`, `sealed_paths`, `blocked_sources` (or start from `rules/packs/`) | 15 min |
+| 1 | `pip install git+https://github.com/cyamba/ouroboros-guard`, `oguard init`, fill in `as_of`, `sealed_paths`, `blocked_sources` (or start from `rules/packs/`) | 15 min |
 | 2 | Move outcomes and holdout labels out of the agent's workspace, or under a sealed path | 30 min |
 | 3 | Copy `.claude/settings.json` + `hooks/` (Claude Code) or `AGENTS.md` / `.cursor/rules` (other agents) | 10 min |
 | 4 | Wrap retrieval tools with `TimeFirewall`; log inputs and predictions | 1–2 h |
